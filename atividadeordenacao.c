@@ -5,7 +5,7 @@
 //Imprima o vetor após a ordenação//
 
 #include <stdio.h>
-#include <stlib.h>
+#include <stdlib.h>
 #include <math.h>
 #include <time.h>
 
