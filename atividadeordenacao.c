@@ -9,32 +9,30 @@
 #include <math.h>
 #include <time.h>
 
-//função imprimir vetor //
- void imprimirvetor (int vec [], int length){
-    printf ("digite um número contendo o tamanho para um vetor de inteiros");
-    //loop principal   //
-    for (i = 0, i < length; i++){
-        printf ("%d", vec[i]);
+// imprimir vetores//
+void imprimirvetor(int vec[], int length) {
+    printf("Vetor: ");
+    for (int i = 0; i < length; i++) {
+        printf("%d ", vec[i]);
     }
-    printf ("\n");
- }
- //utilizando bubblesort//
-void bubbleSort (int vec [], int length){
-    for (int i=0, i < length - 1 ; i++){
-        for (int j = 0, j < length - i - 1 ; j++){
-            if (vec[j] < vec[j+1]){
-                //ordenar elementos //
-                int j2 = vec[j];
+    printf("\n");
+}
+
+// Bubble Sort
+void bubbleSort(int vec[], int length) {
+    for (int i = 0; i < length - 1; i++) {
+        for (int j = 0; j < length - i - 1; j++) {
+            if (vec[j] > vec[j + 1]) {
+                // ordenar elementos
+                int temp = vec[j];
                 vec[j] = vec[j + 1];
-                vec[j + 1] = j2;
+                vec[j + 1] = temp;
             }
         }
+    }
+}
 
-
- }}
-
-
- // Selection Sort
+// Selection Sort
 void selectionSort(int vec[], int length) {
     for (int i = 0; i < length - 1; i++) {
         int min_index = i;
@@ -43,7 +41,7 @@ void selectionSort(int vec[], int length) {
                 min_index = j;
             }
         }
-        // Swap elements
+        //ordenar
         int temp = vec[i];
         vec[i] = vec[min_index];
         vec[min_index] = temp;
@@ -57,7 +55,7 @@ void insertionSort(int vec[], int length) {
         key = vec[i];
         j = i - 1;
 
-        // Move elements of vec[0..i-1] that are greater than key to one position ahead of their current position
+        
         while (j >= 0 && vec[j] > key) {
             vec[j + 1] = vec[j];
             j = j - 1;
@@ -75,7 +73,7 @@ int main() {
 
     int vec[length];
 
-    // Initialize array with random values
+    //iniciando com valores aleatórios
     for (int i = 0; i < length; i++) {
         vec[i] = rand() % 100;  // Assuming integers between 0 and 99
     }
