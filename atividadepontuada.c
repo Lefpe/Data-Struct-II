@@ -35,7 +35,7 @@ ingresso  *novo = malloc(sizeof(ingresso));
     scanf ("%d", &novo-> cpf);
 
     printf ("data do evento  Dia, Mes, ano: (use apenas 2 digitos para cada, para ano, os 2 digitos finais) \n");
-    scanf ("%d %d %d", &novo-> datavento.dia, &novo-> dataevento.mes, %novo-> dataevento.ano);
+    scanf ("%d %d %d", &novo-> datavento.dia, &novo-> dataevento.mes, &novo-> dataevento.ano);
 
     novo -> next = NULL;
 
