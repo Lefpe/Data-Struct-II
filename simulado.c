@@ -210,7 +210,7 @@ int main() {
             }
             case 4: {
                 // Exibir lista ordenada (quicksort)
-                Ingresso *ingressosOrdenados[100];  // Assumindo um máximo de 100 ingressos
+                Ingresso *ingressosOrdenados[100]; 
                 int count = 0;
 
                 // Preencher array de ingressos
