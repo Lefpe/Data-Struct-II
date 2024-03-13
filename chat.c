@@ -2,119 +2,173 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Estrutura para a data do evento
 typedef struct Data {
     int dia;
     int mes;
     int ano;
 } Data;
 
-// Estrutura para um ingresso
 typedef struct Ingresso {
-    char cpf[12];
-    char nomeComprador[50];
-    Data dataEvento;
-    struct Ingresso* proximoIngresso;
+    char nome[50];
+    int cpf;
+    Data dataevento;
+    struct Ingresso *next;
 } Ingresso;
 
-// Estrutura para a lista de ingressos
-typedef struct {
-    Ingresso* primeiroIngresso;
-} ListaIngressos;
+struct ListaIngressos {
+    Ingresso *first;
+};
 
-// Função para buscar ingressos por CPF e ordenar com Insertion Sort
-void buscarIngressosPorCPF(ListaIngressos lista, const char cpf[]) {
-    // Implementação do Insertion Sort para ordenar a lista por data
-    // ...
+void cadastrarIngresso(struct ListaIngressos *lista) {
+    Ingresso *novoIngresso = malloc(sizeof(Ingresso));
 
-    // Exemplo de como pode ser feita a busca
-    Ingresso* atual = lista.primeiroIngresso;
+    printf("Digite seu nome: ");
+    scanf("%s", novoIngresso->nome);
+
+    printf("CPF: ");
+    scanf("%d", &novoIngresso->cpf);
+
+    printf("Data do evento (Dia Mes Ano): ");
+    scanf("%d %d %d", &novoIngresso->dataevento.dia, &novoIngresso->dataevento.mes, &novoIngresso->dataevento.ano);
+
+    novoIngresso->next = NULL;
+
+    // Verificar duplicidade antes de cadastrar
+    Ingresso *atual = lista->first;
+    int duplicado = 0;
+
     while (atual != NULL) {
-        if (strcmp(atual->cpf, cpf) == 0) {
-            // Imprimir ou processar o ingresso encontrado
-            printf("CPF: %s, Nome: %s, Data do Evento: %02d/%02d/%04d\n",
-                   atual->cpf, atual->nomeComprador, atual->dataEvento.dia,
-                   atual->dataEvento.mes, atual->dataEvento.ano);
+        if (atual->cpf == novoIngresso->cpf && memcmp(&atual->dataevento, &novoIngresso->dataevento, sizeof(Data)) == 0) {
+            printf("Duplicidade detectada. Não cadastrado.\n");
+            duplicado = 1;
+            free(novoIngresso);
+            break;
         }
-        atual = atual->proximoIngresso;
+        atual = atual->next;
+    }
+
+    // Cadastrar se não for duplicado
+    if (!duplicado) {
+        // Inserir ordenadamente utilizando Insertion Sort
+        Ingresso *atual = lista->first;
+        Ingresso *anterior = NULL;
+
+        while (atual != NULL && atual->dataevento.ano < novoIngresso->dataevento.ano) {
+            anterior = atual;
+            atual = atual->next;
+        }
+
+        while (atual != NULL && atual->dataevento.ano == novoIngresso->dataevento.ano &&
+               atual->dataevento.mes < novoIngresso->dataevento.mes) {
+            anterior = atual;
+            atual = atual->next;
+        }
+
+        while (atual != NULL && atual->dataevento.ano == novoIngresso->dataevento.ano &&
+               atual->dataevento.mes == novoIngresso->dataevento.mes &&
+               atual->dataevento.dia < novoIngresso->dataevento.dia) {
+            anterior = atual;
+            atual = atual->next;
+        }
+
+        if (anterior == NULL) {
+            novoIngresso->next = lista->first;
+            lista->first = novoIngresso;
+        } else {
+            anterior->next = novoIngresso;
+            novoIngresso->next = atual;
+        }
+
+        printf("Ingresso cadastrado com sucesso!\n");
     }
 }
 
-// Função para inserir um novo ingresso ordenadamente na lista
-void inserirOrdenado(ListaIngressos* lista, Ingresso* novoIngresso) {
-    // Verificar se já existe um ingresso com o mesmo CPF e data
-    Ingresso* atual = lista->primeiroIngresso;
-    Ingresso* anterior = NULL;
+void buscarPorCPF(struct ListaIngressos lista, int cpf) {
+    Ingresso *atual = lista.first;
+    printf("Ingressos encontrados para CPF %d:\n", cpf);
 
     while (atual != NULL) {
-        if (strcmp(atual->cpf, novoIngresso->cpf) == 0 &&
-            memcmp(&atual->dataEvento, &novoIngresso->dataEvento, sizeof(Data)) == 0) {
-            printf("Já existe um ingresso cadastrado para o CPF %s na data do evento.\n", novoIngresso->cpf);
-            free(novoIngresso);  // Liberar memória alocada para o novo ingresso
-            return;
+        if (atual->cpf == cpf) {
+            printf("Nome: %s, Data do Evento: %02d/%02d/%04d\n",
+                   atual->nome, atual->dataevento.dia,
+                   atual->dataevento.mes, atual->dataevento.ano);
         }
-        anterior = atual;
-        atual = atual->proximoIngresso;
-    }
-
-    // Inserir ordenadamente na lista
-    if (anterior == NULL) {
-        novoIngresso->proximoIngresso = lista->primeiroIngresso;
-        lista->primeiroIngresso = novoIngresso;
-    } else {
-        novoIngresso->proximoIngresso = anterior->proximoIngresso;
-        anterior->proximoIngresso = novoIngresso;
+        atual = atual->next;
     }
 }
 
-// Função para ordenar a lista pela data do evento usando o método Quick Sort
-void quickSort(ListaIngressos* lista) {
+void insertionSort(struct ListaIngressos *lista) {
+    if (lista->first == NULL || lista->first->next == NULL) {
+        return;
+    }
+
+    Ingresso *sorted = NULL;
+    Ingresso *current = lista->first;
+
+    while (current != NULL) {
+        Ingresso *next = current->next;
+
+        if (sorted == NULL || memcmp(&sorted->dataevento, &current->dataevento, sizeof(Data)) > 0) {
+            current->next = sorted;
+            sorted = current;
+        } else {
+            Ingresso *temp = sorted;
+            while (temp->next != NULL && memcmp(&temp->next->dataevento, &current->dataevento, sizeof(Data)) < 0) {
+                temp = temp->next;
+            }
+            current->next = temp->next;
+            temp->next = current;
+        }
+
+        current = next;
+    }
+
+    lista->first = sorted;
+}
+
+void quickSort(struct ListaIngressos *lista) {
     // Implementação do Quick Sort para ordenar a lista por data
     // ...
 }
 
-// Função para exibir quantos ingressos foram cadastrados em cada data
-void exibirQuantidadePorData(ListaIngressos lista) {
+void exibirQuantidadePorData(struct ListaIngressos lista) {
     // Implementação para contar e exibir a quantidade de ingressos por data
     // ...
 }
 
-// Função principal para teste
+void liberarMemoria(struct ListaIngressos *lista) {
+    Ingresso *atual = lista->first;
+    while (atual != NULL) {
+        Ingresso *temp = atual;
+        atual = atual->next;
+        free(temp);
+    }
+    lista->first = NULL; // Certificar-se de que a lista está vazia após a liberação de memória
+}
+
 int main() {
-    ListaIngressos lista;
-    lista.primeiroIngresso = NULL;
+    struct ListaIngressos lista;
+    lista.first = NULL;
 
     // Exemplo de cadastro de ingressos
-    Ingresso* ingresso1 = malloc(sizeof(Ingresso));
-    strcpy(ingresso1->cpf, "12345678901");
-    strcpy(ingresso1->nomeComprador, "João Silva");
-    ingresso1->dataEvento.dia = 13;
-    ingresso1->dataEvento.mes = 3;
-    ingresso1->dataEvento.ano = 2024;
-    ingresso1->proximoIngresso = NULL;
-
-    Ingresso* ingresso2 = malloc(sizeof(Ingresso));
-    strcpy(ingresso2->cpf, "12345678901");
-    strcpy(ingresso2->nomeComprador, "Maria Oliveira");
-    ingresso2->dataEvento.dia = 14;
-    ingresso2->dataEvento.mes = 3;
-    ingresso2->dataEvento.ano = 2024;
-    ingresso2->proximoIngresso = NULL;
-
-    inserirOrdenado(&lista, ingresso1);
-    inserirOrdenado(&lista, ingresso2);
+    for (int i = 0; i < 3; i++) {
+        cadastrarIngresso(&lista);
+    }
 
     // Exemplo de busca por CPF
-    buscarIngressosPorCPF(lista, "12345678901");
+    int cpfBusca;
+    printf("Digite o CPF para busca: ");
+    scanf("%d", &cpfBusca);
+    buscarPorCPF(lista, cpfBusca);
 
-    // Exemplo de ordenação da lista por data usando Quick Sort
-    quickSort(&lista);
+    // Exemplo de ordenação da lista por data usando Insertion Sort
+    insertionSort(&lista);
 
-    // Exemplo de exibição da quantidade de ingressos por data
+    // Exemplo de  Exemplo de exibição da quantidade de ingressos por data
     exibirQuantidadePorData(lista);
 
-    // Liberar memória (certifique-se de liberar toda a memória alocada)
-    // ...
+    // Liberar memória
+    liberarMemoria(&lista);
 
     return 0;
 }
