@@ -38,6 +38,56 @@ Ingresso *cadastroIngresso() {
     novo->next = NULL;
 
     return novo;
+
+    //verificar duplicidade//
+    Ingresso *atual = listaringressos -> first;
+   
+
+    Ingresso *atual = lista->first;
+    int duplicado = 0;
+
+    while (atual != NULL) {
+        if (atual->cpf == novoIngresso->cpf && memcmp(&atual->dataevento, &novoIngresso->dataevento, sizeof(Data)) == 0) {
+            printf("Duplicidade detectada. Não cadastrado.\n");
+            duplicado = 1;
+            free(novoIngresso);
+            break;
+        }
+        atual = atual->next;
+    }
+  // Cadastrar se não for duplicado
+    if (!duplicado) {
+        // Inserir ordenadamente utilizando InsertionSort//
+        Ingresso *atual = lista->first;
+        Ingresso *anterior = NULL;
+        //verifica data do evento//
+        while (atual != NULL && atual->dataevento.ano < novoIngresso->dataevento.ano) {
+            anterior = atual;
+            atual = atual->next;
+        }
+         while (atual != NULL && atual->dataevento.ano == novoIngresso->dataevento.ano &&
+               atual->dataevento.mes < novoIngresso->dataevento.mes) {
+            anterior = atual;
+            atual = atual->next;
+        }
+
+        while (atual != NULL && atual->dataevento.ano == novoIngresso->dataevento.ano &&
+               atual->dataevento.mes == novoIngresso->dataevento.mes &&
+               atual->dataevento.dia < novoIngresso->dataevento.dia) {
+            anterior = atual;
+            atual = atual->next;
+        }
+
+        if (anterior == NULL) {
+            novoIngresso->next = lista->first;
+            lista->first = ;
+        } else {
+            anterior->next = novoIngresso;
+            novoIngresso->next = atual;
+        }
+
+        printf("Ingresso cadastrado!\n");
+    }
 }
 
 // Comparação de dados
@@ -205,8 +255,7 @@ int main() {
         }
     } while (opcao != 0);
 
-    // Liberação de memória (certifique-se de liberar toda a memória alocada)
-    // ...
+    
 
     return 0;
 }
