@@ -164,7 +164,7 @@ int main() {
                 }
 
                 // Cadastrar se não for duplicado
-                if (!duplicado)// ... (continuação do código)
+                if (!duplicado)
 
                 // Cadastrar se não for duplicado
                 if (!duplicado) {
