@@ -1,4 +1,4 @@
-#include <stdio.h>
+eu#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -164,4 +164,84 @@ int main() {
                 }
 
                 // Cadastrar se não for duplicado
-                if (!duplicado)
+                if (!duplicado)// ... (continuação do código)
+
+                // Cadastrar se não for duplicado
+                if (!duplicado) {
+                    // Inserir ordenadamente utilizando InsertionSort
+                    atual = lista.first;
+                    Ingresso *anterior = NULL;
+
+                    while (atual != NULL && compararDados(novoIngresso, atual) > 0) {
+                        anterior = atual;
+                        atual = atual->next;
+                    }
+
+                    if (anterior == NULL) {
+                        novoIngresso->next = lista.first;
+                        lista.first = novoIngresso;
+                    } else {
+                        anterior->next = novoIngresso;
+                        novoIngresso->next = atual;
+                    }
+
+                    printf("Ingresso cadastrado!\n");
+                }
+                break;
+            }
+            case 2: {
+                // Exibir lista
+                Ingresso *atual = lista.first;
+                while (atual != NULL) {
+                    printf("Nome: %s, CPF: %d, Data do Evento: %02d/%02d/%04d\n",
+                           atual->nome, atual->cpf, atual->dataevento.dia,
+                           atual->dataevento.mes, atual->dataevento.ano);
+                    atual = atual->next;
+                }
+                break;
+            }
+            case 3: {
+                // Buscar ingressos por CPF
+                int cpfBusca;
+                printf("Digite o CPF para busca: ");
+                scanf("%d", &cpfBusca);
+                buscarPorCPF(lista, cpfBusca);
+                break;
+            }
+            case 4: {
+                // Exibir lista ordenada (quicksort)
+                Ingresso *ingressosOrdenados[100];  // Assumindo um máximo de 100 ingressos
+                int count = 0;
+
+                // Preencher array de ingressos
+                Ingresso *atual = lista.first;
+                while (atual != NULL) {
+                    ingressosOrdenados[count++] = atual;
+                    atual = atual->next;
+                }
+
+                // Ordenar array de ingressos usando QuickSort
+                quickSort(ingressosOrdenados, 0, count - 1);
+
+                // Exibir lista ordenada
+                for (int i = 0; i < count; i++) {
+                    printf("Nome: %s, CPF: %d, Data do Evento: %02d/%02d/%04d\n",
+                           ingressosOrdenados[i]->nome, ingressosOrdenados[i]->cpf,
+                           ingressosOrdenados[i]->dataevento.dia, ingressosOrdenados[i]->dataevento.mes,
+                           ingressosOrdenados[i]->dataevento.ano);
+                }
+                break;
+            }
+            case 0: {
+                // Sair
+                break;
+            }
+            default: {
+                printf("Opção inválida. Tente novamente.\n");
+                break;
+            }
+        }
+    } while (opcao != 0);
+
+    return 0;
+}
