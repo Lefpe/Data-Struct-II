@@ -1,6 +1,4 @@
-Vamos finalizar a função `inserirordem` e realizar algumas correções necessárias no código:
 
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
