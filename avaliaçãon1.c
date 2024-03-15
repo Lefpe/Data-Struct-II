@@ -24,6 +24,7 @@ typedef struct proc{
         return novo; 
  }]
 //comparar tamanho //
+//quantidade processo//
 void comparar_memo(Processo *tm1, Processo *tm2){
         Processo 
 
