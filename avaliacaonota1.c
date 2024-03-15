@@ -111,7 +111,7 @@ int main(void) {
             if (processos == NULL) {
                 printf("Lista vazia\n");
             } else {
-        
+        //nao inserida
             }
             break;
         case 4:
