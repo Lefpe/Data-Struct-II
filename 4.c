@@ -1,4 +1,4 @@
-#include <stdio.h>
+um#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -125,4 +125,28 @@ int main(void) {
             }
             break;
         case 4:
-            //
+            // Mostrar ordem por memória
+            if (num_processos == 0) {
+                printf("Lista vazia.\n");
+            } else {
+                // Aqui você precisa implementar a função de ordenação por memória
+                // BubbleSort(processos, num_processos);
+                printf("Ordenando por memória...\n");
+                // imprimir_processos(processos, num_processos);
+            }
+            break;
+        case 5:
+            printf("Saindo...\n");
+            break;
+        default:
+            printf("Opção inválida.\n");
+            break;
+    }
+
+    // Liberar memória alocada
+    for (int i = 0; i < num_processos; i++) {
+        free(processos[i]);
+    }
+
+    return 0;
+}
