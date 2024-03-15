@@ -22,20 +22,62 @@ typedef struct proc{
         scanf("%d", novo->qnt_memoria);
         novo->prox = NULL; 
         return novo; 
- }
-//comparar memória//
-void comparar_memoria(){
+ }]
+//comparar tamanho //
+void comparar_memo(Processo *tm1, Processo *tm2){
+        Processo 
 
 }
-
+//ordenar por data
 void BubbleSort(){
+
 }
-void quickSort(){
+//particionar quickSort//
+int particionar (Processo *lista[], int atual, int proximo) {]
+//pivot//
+    Processo *pivot = lista[proximo];
+    int i = atual - 1;
+
+    for (int j = atual; j < proximo; j++) {
+        if (compararDados(lista[j], pivot) < 0) {
+
+         
 }
+    //ordenando com quickSort//
+        //ordena pela quantidade de memoria//
+void quickSort(proc *lista [],  int atual, int proximo){
+if (atual < proximo){
+ int indiceParticao = particionar(lista, atual, proximo);
+
+        quickSort(lista, atual, indiceParticao - 1);
+        quickSort(lista, indiceParticao + 1, proximo);
+    }
+}
+
+
+}
+//ordena pelo nome//
 void insertionSort(){
 }
 int main (void){
 
 int opcao;
+printf("--menu de tarefas-- \n\n");
+    printf("1) inserir tarefas \n 2) mostrar ordem por nome 3) mostrar ordem por data 4) mostrar ordem por memória \n sair ");
+    scanf("%d", opcao);
+switch (opcao){
+case '1':
+break;
+case  '2':
+break;
+case '3':
+break;
+case '4':
+break;
+default:
+printf ("saindo...");
+break:
+
+}
 
 }
