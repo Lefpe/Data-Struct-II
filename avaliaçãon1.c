@@ -19,12 +19,11 @@ typedef struct proc{
         printf ("digite a sua data (FORMATO: AAAA-MM-DD): \n");
         scanf ("%s", novo->data_inicio);
         printf ("Digite a quantidade de memória: \n");
-        scanf("%d", novo->qnt_memoria);
+        scanf("%d", &novo->qnt_memoria);
         novo->prox = NULL; 
         return novo; 
- }]
+ }
 //comparar tamanho //
-//quantidade processo//
 void comparar_memo(Processo *tm1, Processo *tm2){
         Processo 
 
@@ -34,7 +33,7 @@ void BubbleSort(){
 
 }
 //particionar quickSort//
-int particionar (Processo *lista[], int atual, int proximo) {]
+int particionar (Processo *lista[], int atual, int proximo) {
 //pivot//
     Processo *pivot = lista[proximo];
     int i = atual - 1;
@@ -65,7 +64,7 @@ int main (void){
 int opcao;
 printf("--menu de tarefas-- \n\n");
     printf("1) inserir tarefas \n 2) mostrar ordem por nome 3) mostrar ordem por data 4) mostrar ordem por memória \n sair ");
-    scanf("%d", opcao);
+    scanf("%d", &opcao);
 switch (opcao){
 case '1':
 break;
@@ -77,7 +76,7 @@ case '4':
 break;
 default:
 printf ("saindo...");
-break:
+break;
 
 }
 
